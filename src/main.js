@@ -2,7 +2,7 @@ const express = require('express');
 const log4js = require('log4js');
 const bodyParser = require('body-parser');
 
-const { logConfig, port } = require('./config');
+const { logConfig, port } = require('./configs');
 log4js.configure(logConfig);
 const Logger = log4js.getLogger('app');
 
@@ -21,8 +21,9 @@ app.use(require('./middleware/cors'));
 // 错误处理
 app.use(require('./middleware/errorHandler'));
 
+const router = require('./router');
 // 动态路由
-app.use('/', require('./modules/router'));
+app.use('/', router);
 
 app.listen(port, (err) => {
   if (err) {

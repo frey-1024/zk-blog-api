@@ -22,5 +22,7 @@
     "express": "^4.16.3",
     "log4js": "^2.5.3",
     "mysql": "^2.15.0"
+  },
+  "devDependencies": {
   }
 }
