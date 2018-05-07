@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-router.post('/', function() {
-  console.log('ddd');
-});
+router.use('/', require('./securityRouter'));
 
 module.exports = router;

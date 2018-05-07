@@ -1,17 +1,14 @@
-const mysql = require('mysql');   //引入mysql包，(npm install mysql --save)
+const mysql = require('mysql');
+const bluebird = require('bluebird');
+const log = require('log4js').getLogger('mysql');
 const { mysqlConfig } = require('../configs/index');
-const pool = mysql.createPool(mysqlConfig);
+// promisify
+bluebird.promisifyAll(require('mysql/lib/Connection').prototype);
+bluebird.promisifyAll(require('mysql/lib/Pool').prototype);
 
-module.exports = pool;
-// pool.getConnection(function (err, connection) {   //开启连接
-//   if (err) throw err;
-//
-//   var value = 'zhang';
-//   var query = connection.query('SELECT * FROM user WHERE name=?', value, function (err, result) {
-//     if (err) throw err;
-//
-//     console.log(result);
-//     connection.release();
-//   });
-//   console.log(query.sql);
-// });
+function createPool() {
+  log.info('创建mysql连接池......');
+  return mysql.createPool(mysqlConfig);
+}
+
+module.exports = createPool();
